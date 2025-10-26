@@ -41,3 +41,4 @@ Then open your browser to `http://127.0.0.1:8000/docs` for the Swagger API UI.
 
 This README section (with diagram) can be dropped directly into your GitHub repo to document your project clearly for UCSC reviewers and potential employers.
 # IntelligentKnowledgeAssistant
+# IntelligentKnowledgeAssistant
