@@ -20,14 +20,53 @@ A retrieval‑augmented AI system that answers natural‑language questions over
 
 ---
 
-## ⚙️ Run Locally
+## ⚙️ Configuration
+
+The system supports both **Ollama (free, local)** and **OpenAI** for LLM generation. Configure in `.env`:
+
 ```bash
-python src/ingest.py
-python src/embed_store.py
-uvicorn src.api:app --reload
+# Use Ollama (FREE - runs locally)
+LLM_PROVIDER=ollama
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=deepseek-r1:8b
+
+# Or use OpenAI (requires API credits)
+# LLM_PROVIDER=openai
+# OPENAI_API_KEY=sk-your-key-here
 ```
 
-Then open your browser to `http://127.0.0.1:8000/docs` for the Swagger API UI.
+## ⚙️ Run Locally
+
+### Step 1: Ingest Documents and Create Embeddings
+```bash
+python src/ingest.py          # Load and chunk PDFs from data/
+python src/embed_store.py     # Create FAISS vector store (uses free local embeddings)
+```
+
+### Step 2: Choose Your Interface
+
+**Option A: Streamlit UI (Recommended - with conversational memory)**
+```bash
+streamlit run ui/app.py
+# Or use the shortcut:
+./run_ui.sh
+```
+Features:
+- 💬 Interactive chat interface
+- 🧠 Conversational memory (remembers past questions)
+- 📜 Conversation history sidebar
+- 📄 Source document citations
+
+**Option B: FastAPI (REST API)**
+```bash
+uvicorn src.api:app --reload
+```
+Then open `http://127.0.0.1:8000/docs` for the Swagger API UI.
+
+**Option C: Command Line**
+```bash
+python src/generator.py
+```
 
 ---
 
@@ -37,8 +76,15 @@ Then open your browser to `http://127.0.0.1:8000/docs` for the Swagger API UI.
 - Add a LangChain Agent for summarization + reasoning.
 - Deploy via Render or Hugging Face Spaces.
 
+## 💡 Features
+
+- ✅ **100% Free Operation**: Uses local Ollama + HuggingFace embeddings (no API costs)
+- ✅ **Conversational Memory**: Streamlit UI remembers conversation history
+- ✅ **Flexible LLM Support**: Switch between Ollama and OpenAI via config
+- ✅ **Source Citations**: Shows which documents were used to generate answers
+- ✅ **Multiple Interfaces**: Streamlit UI, REST API, or command line
+- ✅ **Easy Setup**: Simple environment variable configuration
+
 ---
 
-This README section (with diagram) can be dropped directly into your GitHub repo to document your project clearly for UCSC reviewers and potential employers.
-# IntelligentKnowledgeAssistant
-# IntelligentKnowledgeAssistant
+This project demonstrates practical RAG implementation skills for AI Engineer roles.
